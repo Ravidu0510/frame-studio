@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #070916;
+  background-image:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(139, 92, 246, 0.18),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(25, 217, 210, 0.1),
+      transparent 30%
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    44px 44px,
+    44px 44px;
+}
+
+::selection {
+  background: #ffb020;
+  color: #12141c;
+}
+
+:focus-visible {
+  outline: 2px solid #2fe6c4;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.hairline {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(245, 246, 248, 0.16),
+    transparent
+  );
+  height: 1px;
+}
+
+.card-shadow {
+  box-shadow:
+    0 40px 80px -30px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(245, 246, 248, 0.06);
+}
+
+.checker {
+  background-image:
+    linear-gradient(45deg, #20232e 25%, transparent 25%),
+    linear-gradient(-45deg, #20232e 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #20232e 75%),
+    linear-gradient(-45deg, transparent 75%, #20232e 75%);
+  background-size: 20px 20px;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0px;
+  background-color: #090b1a;
+}
+
+.hero {
+  position: relative;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(25, 217, 210, 0.25));
+}
+
+.hero-preview {
+  position: relative;
+  width: min(100%, 300px);
+  justify-self: center;
+  transform: rotate(3deg);
+  border: 1px solid rgba(25, 217, 210, 0.5);
+  background: #0d1022;
+  padding: 10px;
+  box-shadow:
+    18px 18px 0 rgba(139, 92, 246, 0.18),
+    0 0 50px rgba(25, 217, 210, 0.14);
+}
+
+.hero-preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.preview-label {
+  display: block;
+  padding: 9px 2px 1px;
+  color: #19d9d2;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+}
