@@ -87,8 +87,8 @@ body {
 }
 
 .brand-logo {
-  width: 44px;
-  height: 44px;
+  width: 68px;
+  height: 68px;
   object-fit: contain;
   filter: drop-shadow(0 0 16px rgba(25, 217, 210, 0.25));
 }

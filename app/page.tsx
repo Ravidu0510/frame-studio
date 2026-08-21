@@ -234,13 +234,18 @@ export default function Page() {
               alt="CompSoc University of Jaffna logo"
               className="brand-logo"
             />
-            <span className="font-mono text-[10px] tracking-[0.24em] text-paper/55 uppercase">
+            <span className="font-mono text-xs font-medium tracking-[0.2em] text-paper/75 uppercase md:text-sm">
               CompSoc26
             </span>
           </div>
-          <span className="font-mono text-[10px] tracking-[0.2em] text-teal uppercase">
-            University of Jaffna
-          </span>
+          <a
+            href="https://csc.jfn.ac.lk"
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-[10px] tracking-[0.16em] text-teal uppercase transition-colors hover:text-paper md:text-xs"
+          >
+            Department of Computer Science
+          </a>
         </header>
 
         <div className="grid items-center gap-12 pt-14 md:grid-cols-[1.1fr_0.9fr] md:gap-16 md:pt-20">
@@ -444,9 +449,48 @@ export default function Page() {
         <div className="hairline" />
       </div>
 
-      <footer className="mx-auto max-w-5xl px-6 py-10 text-sm text-paper/40 flex flex-wrap items-center justify-between gap-3">
-        <span>{EVENT_NAME}</span>
-        <span>CompSoc26 · Department of Computer Science</span>
+      <footer className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-10 text-sm text-paper/40">
+        <div className="flex flex-wrap items-center justify-between gap-5">
+          <div className="flex flex-wrap items-center justify-start gap-x-5 gap-y-2">
+            <a
+              href="https://www.facebook.com/share/1BpSpd44Vb/"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-teal"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://society.jfn.ac.lk/compsoc/"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-teal"
+            >
+              CompSoc
+            </a>
+            <a
+              href="https://www.linkedin.com/company/compsoc-uoj/"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-teal"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ravidu-nimsara-86bb2a313"
+              target="_blank"
+              rel="noreferrer"
+              className="text-paper/55 transition-colors hover:text-teal"
+            >
+              Developed by Ravidu Nimsara
+            </a>
+          </div>
+          <span className="text-right">{EVENT_NAME}</span>
+        </div>
+        <span className="w-full text-center text-xs text-paper/45">
+          © 2026. All rights reserved. Organized by Computer Society of
+          University of Jaffna.
+        </span>
       </footer>
     </main>
   );
