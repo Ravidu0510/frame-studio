@@ -270,8 +270,8 @@ export default function Page() {
     <main className="min-h-screen">
       {/* Hero */}
       <section className="hero mx-auto max-w-6xl px-6 pt-8 pb-14 md:pt-10 md:pb-20">
-        <header className="flex items-center justify-between border-b border-line pb-5">
-          <div className="flex items-center gap-3">
+        <header className="flex items-center justify-between border-b border-line p-5">
+          <div className="flex flex-col md:flex-row items-center gap-3">
             <img
               src="/compsoc-logo.png"
               alt="CompSoc University of Jaffna logo"
@@ -285,7 +285,7 @@ export default function Page() {
             href="https://csc.jfn.ac.lk"
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[10px] tracking-[0.16em] text-teal uppercase transition-colors hover:text-paper md:text-xs"
+            className=" font-mono text-center text-[10px] tracking-[0.16em] text-teal uppercase transition-colors hover:text-paper md:text-xs"
           >
             Department of Computer Science
           </a>
