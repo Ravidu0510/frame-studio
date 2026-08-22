@@ -6,9 +6,8 @@ const CANVAS_SIZE = 1080;
 const FRAME_SRC = "/frame.png";
 const EVENT_NAME = "AI Capacity Building";
 const CAPTION = "I'm at AI Capacity Building with CompSoc26 today! #CompSoc26";
-// The supplied frame leaves this central opening transparent; draw the photo
-// underneath the artwork across the whole opening so no blank strips remain.
-const PHOTO_AREA = { x: 48, y: 92, width: 984, height: 860 };
+// Keep the photo inside the opening, including its rounded corners.
+const PHOTO_AREA = { x: 48, y: 92, width: 984, height: 860, radius: 58 };
 
 type Pan = { x: number; y: number };
 
@@ -19,6 +18,11 @@ function clampPan(pan: Pan, drawW: number, drawH: number): Pan {
     x: Math.min(PHOTO_AREA.x, Math.max(minX, pan.x)),
     y: Math.min(PHOTO_AREA.y, Math.max(minY, pan.y)),
   };
+}
+
+function getPositionPercent(value: number, minimum: number, maximum: number) {
+  if (maximum === minimum) return 50;
+  return ((value - minimum) / (maximum - minimum)) * 100;
 }
 
 export default function Page() {
@@ -83,7 +87,13 @@ export default function Page() {
       const drawH = img.naturalHeight * scale;
       ctx.save();
       ctx.beginPath();
-      ctx.rect(PHOTO_AREA.x, PHOTO_AREA.y, PHOTO_AREA.width, PHOTO_AREA.height);
+      ctx.roundRect(
+        PHOTO_AREA.x,
+        PHOTO_AREA.y,
+        PHOTO_AREA.width,
+        PHOTO_AREA.height,
+        PHOTO_AREA.radius,
+      );
       ctx.clip();
       ctx.drawImage(img, pan.x, pan.y, drawW, drawH);
       ctx.restore();
@@ -132,6 +142,39 @@ export default function Page() {
     const drawW = img.naturalWidth * scale;
     const drawH = img.naturalHeight * scale;
     setPan((prev) => clampPan(prev, drawW, drawH));
+  };
+
+  const onPositionChange = (axis: "x" | "y", value: number) => {
+    const img = imgRef.current;
+    if (!img) return;
+    const scale = baseScale(img.naturalWidth, img.naturalHeight) * zoom;
+    const drawW = img.naturalWidth * scale;
+    const drawH = img.naturalHeight * scale;
+    const minimum =
+      axis === "x"
+        ? PHOTO_AREA.x + PHOTO_AREA.width - drawW
+        : PHOTO_AREA.y + PHOTO_AREA.height - drawH;
+    const maximum = axis === "x" ? PHOTO_AREA.x : PHOTO_AREA.y;
+    const position = minimum + (maximum - minimum) * (value / 100);
+    setPan((prev) =>
+      clampPan(
+        axis === "x" ? { x: position, y: prev.y } : { x: prev.x, y: position },
+        drawW,
+        drawH,
+      ),
+    );
+  };
+
+  const getAxisPosition = (axis: "x" | "y") => {
+    const img = imgRef.current;
+    if (!img) return 50;
+    const scale = baseScale(img.naturalWidth, img.naturalHeight) * zoom;
+    const size =
+      axis === "x" ? img.naturalWidth * scale : img.naturalHeight * scale;
+    const areaStart = axis === "x" ? PHOTO_AREA.x : PHOTO_AREA.y;
+    const areaSize = axis === "x" ? PHOTO_AREA.width : PHOTO_AREA.height;
+    const current = axis === "x" ? pan.x : pan.y;
+    return getPositionPercent(current, areaStart + areaSize - size, areaStart);
   };
 
   const onPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -404,6 +447,43 @@ export default function Page() {
                     onChange={(e) => onZoomChange(parseFloat(e.target.value))}
                     className="w-full accent-amber"
                   />
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="mb-2 flex items-center justify-between text-xs font-mono text-paper/50">
+                      <span>HORIZONTAL POSITION</span>
+                      <span>{Math.round(getAxisPosition("x"))}%</span>
+                    </span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={getAxisPosition("x")}
+                      onChange={(e) =>
+                        onPositionChange("x", Number(e.target.value))
+                      }
+                      aria-label="Horizontal image position"
+                      className="w-full accent-teal"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="mb-2 flex items-center justify-between text-xs font-mono text-paper/50">
+                      <span>VERTICAL POSITION</span>
+                      <span>{Math.round(getAxisPosition("y"))}%</span>
+                    </span>
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={getAxisPosition("y")}
+                      onChange={(e) =>
+                        onPositionChange("y", Number(e.target.value))
+                      }
+                      aria-label="Vertical image position"
+                      className="w-full accent-teal"
+                    />
+                  </label>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
